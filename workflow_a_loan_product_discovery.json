@@ -1,0 +1,47 @@
+
+{
+  "name": "Loan Product Discovery",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "items[0].json = {
+  product_id: 1,
+  product_name: "Personal Loan A",
+  interest_rate: 12.5,
+  min_income: 25000,
+  min_credit_score: 650
+};
+return items;"
+      },
+      "name": "Scrape Loan Product",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Insert into loan_products table
+return items;"
+      },
+      "name": "Insert to DB",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [680, 300]
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [[{"node": "Scrape Loan Product", "type": "main", "index": 0}]]
+    },
+    "Scrape Loan Product": {
+      "main": [[{"node": "Insert to DB", "type": "main", "index": 0}]]
+    }
+  }
+}

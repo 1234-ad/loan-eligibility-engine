@@ -1,0 +1,56 @@
+
+{
+  "name": "User Notification",
+  "nodes": [
+    {
+      "parameters": {
+        "interval": 60
+      },
+      "name": "Every Hour",
+      "type": "n8n-nodes-base.interval",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Fetch matches grouped by user
+return items;"
+      },
+      "name": "Fetch Matches",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Format email content
+return items;"
+      },
+      "name": "Format Email",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Send using SES or SMTP
+return items;"
+      },
+      "name": "Send Email",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [900, 300]
+    }
+  ],
+  "connections": {
+    "Every Hour": {
+      "main": [[{"node": "Fetch Matches", "type": "main", "index": 0}]]
+    },
+    "Fetch Matches": {
+      "main": [[{"node": "Format Email", "type": "main", "index": 0}]]
+    },
+    "Format Email": {
+      "main": [[{"node": "Send Email", "type": "main", "index": 0}]]
+    }
+  }
+}

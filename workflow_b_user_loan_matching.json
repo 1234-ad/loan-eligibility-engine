@@ -1,0 +1,54 @@
+
+{
+  "name": "User Loan Matching",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Fetch users and loan products
+return items;"
+      },
+      "name": "Fetch from DB",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Match logic based on income & credit_score
+return items;"
+      },
+      "name": "Match Engine",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Insert matched results
+return items;"
+      },
+      "name": "Insert Matches",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [900, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [[{"node": "Fetch from DB", "type": "main", "index": 0}]]
+    },
+    "Fetch from DB": {
+      "main": [[{"node": "Match Engine", "type": "main", "index": 0}]]
+    },
+    "Match Engine": {
+      "main": [[{"node": "Insert Matches", "type": "main", "index": 0}]]
+    }
+  }
+}

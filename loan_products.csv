@@ -1,0 +1,4 @@
+product_id,product_name,interest_rate,min_income,min_credit_score
+1,Personal Loan A,12.5,25000,650
+2,Home Loan B,8.75,40000,700
+3,Education Loan C,9.0,20000,600
